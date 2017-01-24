@@ -1,6 +1,28 @@
 <resources>
     <string name="app_name">hnkhan-SizeBook</string>
+
     <string name="list_title">Records</string>
     <string name="add_record">Add Record</string>
+    <string name="save_record">Save Record</string>
     <string name="delete_record">Delete Record</string>
+
+    <string name="edit_name">First Last</string>
+    <string name="name_field">Name:</string>
+
+    <string name="edit_date">YYYY-MM-DD</string>
+    <string name="date_field">Date:</string>
+
+    <string name="edit_dimension">In inches</string>
+
+    <string name="neck_field">Neck:</string>
+    <string name="bust_field">Bust:</string>
+    <string name="chest_field">Chest:</string>
+    <string name="waist_field">Waist:</string>
+    <string name="hip_field">Hip:</string>
+    <string name="inseam_field">Inseam:</string>
+
+    <string name="edit_comment">Other notes/comments</string>
+    <string name="comment_field">Comments:</string>
+
+
 </resources>
