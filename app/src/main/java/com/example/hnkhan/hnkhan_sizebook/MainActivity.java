@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recordsList = (ListView) findViewById(R.id.records_list);
 
+        recordsList = (ListView) findViewById(R.id.records_list);
         Button addRecord = (Button) findViewById(R.id.add_record_button);
 
         addRecord.setOnClickListener( new View.OnClickListener()

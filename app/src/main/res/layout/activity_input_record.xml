@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_date"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:focusable="false"/>
 
     </LinearLayout>
 
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_dimension"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:inputType = "numberDecimal" />
 
     </LinearLayout>
 
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_dimension"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:inputType = "numberDecimal" />
 
     </LinearLayout>
 
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_dimension"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:inputType = "numberDecimal" />
 
     </LinearLayout>
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_dimension"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:inputType = "numberDecimal" />
 
     </LinearLayout>
 
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_dimension"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:inputType = "numberDecimal" />
 
     </LinearLayout>
 
@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_dimension"
             android:maxLines="1"
-            android:inputType = "text" />
+            android:inputType = "numberDecimal" />
 
     </LinearLayout>
 
