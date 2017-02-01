@@ -4,12 +4,18 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
+
 import java.util.Calendar;
 
 /**
  * Created by hnkhan on 1/26/17.
  */
+
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -25,7 +31,13 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    //http://www.programcreek.com/java-api-examples
+    // /index.php?source_dir=coursera-android-master/Examples/
+    // UIDatePickerFragment/src/course/examples/ui/datepicker/DatePickerFragmentActivity.java
+    //Jan-31
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
+        ((DatePickerDialog.OnDateSetListener) getActivity()).onDateSet(view, year, month, day);
     }
 }
