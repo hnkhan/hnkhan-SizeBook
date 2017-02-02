@@ -6,6 +6,8 @@
     <string name="save_record">Save Record</string>
     <string name="delete_record">Delete Record</string>
 
+    <string name="pick_date">Pick Date</string>
+
     <string name="edit_name">First Last</string>
     <string name="name_field">Name:</string>
 
