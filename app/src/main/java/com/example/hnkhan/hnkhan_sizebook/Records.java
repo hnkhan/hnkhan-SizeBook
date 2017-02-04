@@ -8,7 +8,6 @@ import java.util.Date;
 
 public class Records
 {
-    private Integer recordnum;
     private String name;
     private Date date;
     private Float neck;
@@ -19,17 +18,9 @@ public class Records
     private Float inseam;
     private String comment;
 
-    public Records(Integer recordnum)
+    public Records(String name)
     {
-        this.setRecordnum(recordnum);
-    }
-
-    public Integer getRecordnum() {
-        return recordnum;
-    }
-
-    public void setRecordnum(Integer recordnum) {
-        this.recordnum = recordnum;
+        this.setName(name);
     }
 
     public String getName() {
@@ -102,5 +93,9 @@ public class Records
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String toString(){
+        return this.getName();
     }
 }

@@ -26,5 +26,7 @@
     <string name="edit_comment">Other notes/comments</string>
     <string name="comment_field">Comments:</string>
 
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
 
 </resources>

@@ -24,32 +24,48 @@ import java.util.Date;
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.adapter;
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.recordsList;
 
-// TODO -handle empty dates
-
-public class InputRecordActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
+public class EditRecord extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     EditText editName, editDate, editNeck, editBust, editChest, editWaist, editHip, editInseam, editComment;
-    private Integer recordCount = 0;
+    private Records record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_record);
+        setContentView(R.layout.activity_edit_record);
 
         //Intent intent = getIntent();
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_main);
-        editName = (EditText) findViewById(R.id.edit_name);
-        editDate = (EditText) findViewById(R.id.edit_date);
-        editNeck = (EditText) findViewById(R.id.neck_field);
-        editBust = (EditText) findViewById(R.id.bust_field);
-        editChest = (EditText) findViewById(R.id.chest_field);
-        editWaist = (EditText) findViewById(R.id.waist_field);
-        editHip = (EditText) findViewById(R.id.hip_field);
-        editInseam = (EditText) findViewById(R.id.inseam_field);
-        editComment = (EditText) findViewById(R.id.comment_field);
+        editName = (EditText) findViewById(R.id.editsave_name);
+        editDate = (EditText) findViewById(R.id.editsave_date);
+        editNeck = (EditText) findViewById(R.id.necksave_field);
+        editBust = (EditText) findViewById(R.id.bustsave_field);
+        editChest = (EditText) findViewById(R.id.chestsave_field);
+        editWaist = (EditText) findViewById(R.id.waistsave_field);
+        editHip = (EditText) findViewById(R.id.hipsave_field);
+        editInseam = (EditText) findViewById(R.id.inseamsave_field);
+        editComment = (EditText) findViewById(R.id.commentsave_field);
 
-        Button saveRecord = (Button) findViewById(R.id.save_record_button);
+        Button saveRecord = (Button) findViewById(R.id.savesave_record_button);
+
+        //load old record
+        Intent intent = getIntent();
+        final int position_ = intent.getIntExtra("position_id", 0);
+        record = recordsList.get(position_);
+        editName.setText(record.getName());
+        if (record.getDate() == null) {
+            Log.d("yes its null... ", "ok");
+
+        }
+        //editDate.setText(record.getDate().toString());
+        //editNeck.setText(record.getNeck().toString());
+        //editBust.setText(record.getBust().toString());
+        //editChest.setText(record.getBust().toString());
+        //editWaist.setText(record.getWaist().toString());
+        //editHip.setText(record.getHip().toString());
+        //editInseam.setText(record.getInseam().toString());
+        //editComment.setText(record.getComment());
 
         //start of "on saveRecord button click"
         saveRecord.setOnClickListener( new View.OnClickListener()
@@ -71,7 +87,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //make sure neck measurement is between 0 and 200
                 if ((editNeck.getText().toString().length() != 0) &&
                         (Float.valueOf(editNeck.getText().toString()) < 0 ||
-                        Float.valueOf(editNeck.getText().toString()) > 200)) {
+                                Float.valueOf(editNeck.getText().toString()) > 200)) {
                     editNeck.setError("Enter a measurement between 0 and 200");
                     neckValid = false;
                 } else {
@@ -81,7 +97,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //make sure bust measurement is between 0 and 200
                 if ((editBust.getText().toString().length() != 0) &&
                         (Float.valueOf(editBust.getText().toString()) < 0 ||
-                        Float.valueOf(editBust.getText().toString()) > 200)) {
+                                Float.valueOf(editBust.getText().toString()) > 200)) {
                     editBust.setError("Enter a measurement between 0 and 200");
                     bustValid = false;
                 } else {
@@ -91,7 +107,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //make sure chest measurement is between 0 and 200
                 if ((editChest.getText().toString().length() != 0) &&
                         (Float.valueOf(editChest.getText().toString()) < 0 ||
-                        Float.valueOf(editChest.getText().toString()) > 200)) {
+                                Float.valueOf(editChest.getText().toString()) > 200)) {
                     editChest.setError("Enter a measurement between 0 and 200");
                     chestValid = false;
                 } else {
@@ -101,7 +117,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //make sure waist measurement is between 0 and 200
                 if ((editWaist.getText().toString().length() != 0) &&
                         (Float.valueOf(editWaist.getText().toString()) < 0 ||
-                        Float.valueOf(editWaist.getText().toString()) > 200)) {
+                                Float.valueOf(editWaist.getText().toString()) > 200)) {
                     editWaist.setError("Enter a measurement between 0 and 200");
                     waistValid = false;
                 } else {
@@ -111,7 +127,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //make sure hip measurement is between 0 and 200
                 if ((editHip.getText().toString().length() != 0) &&
                         (Float.valueOf(editHip.getText().toString()) < 0 ||
-                        Float.valueOf(editHip.getText().toString()) > 200)) {
+                                Float.valueOf(editHip.getText().toString()) > 200)) {
                     editHip.setError("Enter a measurement between 0 and 200");
                     hipValid = false;
                 } else {
@@ -121,7 +137,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //make sure inseam measurement is between 0 and 200
                 if ((editInseam.getText().toString().length() != 0) &&
                         (Float.valueOf(editInseam.getText().toString()) < 0 ||
-                        Float.valueOf(editInseam.getText().toString()) > 200)) {
+                                Float.valueOf(editInseam.getText().toString()) > 200)) {
                     editInseam.setError("Enter a measurement between 0 and 200");
                     inseamValid = false;
                 } else {
@@ -130,10 +146,9 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
 
                 //if all the information is valid
                 if (nameValid && neckValid && bustValid && chestValid &&
-                    waistValid && hipValid && inseamValid) {
+                        waistValid && hipValid && inseamValid) {
                     //now we can create an instance of the records class and start
                     //setting the data because we know its all valid
-                    recordCount++;
                     Records record = new Records(editName.getText().toString());
                     //record.setName(editComment.getText().toString());
 
@@ -150,7 +165,9 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                     //so later we don't have to display the fields that have a negative value
 
                     //neck
-                    if (editNeck.getText().toString().length() != 0) {
+                    if (editNeck.getText().toString().length() == 0) {
+                        record.setNeck(-1f);
+                    } else {
                         record.setNeck(round(Float.valueOf(editNeck.getText().toString())));
                     }
 
@@ -198,7 +215,9 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
 
 
                     setResult(RESULT_OK);
-                    recordsList.add(record);
+                    //delete record and read
+                    recordsList.remove(position_);
+                    recordsList.add(position_, record);
                     adapter.notifyDataSetChanged();
 
 /*                    Log.d("Name: ", record.getName());
