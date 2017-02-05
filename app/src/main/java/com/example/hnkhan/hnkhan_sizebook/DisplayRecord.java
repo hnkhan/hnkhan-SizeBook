@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.recordsList;
 
 public class DisplayRecord extends AppCompatActivity {
@@ -26,6 +28,41 @@ public class DisplayRecord extends AppCompatActivity {
         int position_ = intent.getIntExtra("position_id", 0);
         record = recordsList.get(position_);
 
-        displayRecord.setText(record.getName());
+        displayRecord.setText("Name: " + record.getName());
+
+        //if there not null we will display them. otherwise not to save space
+        if (record.getDate() != null) {
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            String formatted_date = dateformat.format(record.getDate());
+            displayRecord.append("\r\n" + "Date: " + formatted_date);
+        }
+
+        if (record.getNeck() != null) {
+            displayRecord.append("\r\n" + "Neck: " + record.getNeck().toString());
+        }
+
+        if (record.getBust() != null) {
+            displayRecord.append("\r\n" + "Bust: " + record.getBust().toString());
+        }
+
+        if (record.getChest() != null) {
+            displayRecord.append("\r\n" + "Chest: " + record.getChest().toString());
+        }
+
+        if (record.getWaist()!= null) {
+            displayRecord.append("\r\n" + "Waist: " + record.getWaist().toString());
+        }
+
+        if (record.getHip() != null) {
+            displayRecord.append("\r\n" + "Hip: " + record.getHip().toString());
+        }
+
+        if (record.getInseam() != null) {
+            displayRecord.append("\r\n" + "Inseam: " + record.getInseam().toString());
+        }
+
+        if (record.getComment() != null) {
+            displayRecord.append("\r\n" + "Comment: " + record.getComment());
+        }
     }
 }

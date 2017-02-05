@@ -13,6 +13,7 @@
 
     <TextView android:id="@+id/display_record"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:textSize="18sp"/>
 
 </LinearLayout>

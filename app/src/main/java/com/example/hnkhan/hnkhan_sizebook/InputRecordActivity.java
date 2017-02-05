@@ -1,6 +1,7 @@
 package com.example.hnkhan.hnkhan_sizebook;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +14,25 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.adapter;
@@ -30,6 +44,8 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
 
     EditText editName, editDate, editNeck, editBust, editChest, editWaist, editHip, editInseam, editComment;
     private Integer recordCount = 0;
+
+    private static final String FILENAME = "file.sav";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,15 +153,9 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                     Records record = new Records(editName.getText().toString());
                     //record.setName(editComment.getText().toString());
 
-                    //http://stackoverflow.com/questions/8573250/android-how-can-i-convert-string-to-date
-                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-mm-dd");
-                    try {
-                        Date date = dateformat.parse(editDate.getText().toString());
-                        record.setDate(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    if (editDate.getText() != null) {
+                        record.setDate(editDate.getText().toString());
                     }
-
                     //if they put nothing in the measurements, we will assign it a negative number
                     //so later we don't have to display the fields that have a negative value
 
@@ -155,51 +165,39 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                     }
 
                     //bust
-                    if (editBust.getText().toString().length() == 0) {
-                        record.setBust(-1f);
-                    } else {
+                    if (editBust.getText().toString().length() != 0) {
                         record.setBust(round(Float.valueOf(editBust.getText().toString())));
                     }
 
                     //chest
-                    if (editChest.getText().toString().length() == 0) {
-                        record.setChest(-1f);
-                    } else {
+                    if (editChest.getText().toString().length() != 0) {
                         record.setChest(round(Float.valueOf(editChest.getText().toString())));
                     }
 
                     //waist
-                    if (editWaist.getText().toString().length() == 0) {
-                        record.setWaist(-1f);
-                    } else {
+                    if (editWaist.getText().toString().length() != 0) {
                         record.setWaist(round(Float.valueOf(editWaist.getText().toString())));
                     }
 
                     //hip
-                    if (editHip.getText().toString().length() == 0) {
-                        record.setHip(-1f);
-                    } else {
+                    if (editHip.getText().toString().length() != 0) {
                         record.setHip(round(Float.valueOf(editHip.getText().toString())));
                     }
 
                     //inseam
-                    if (editInseam.getText().toString().length() == 0) {
-                        record.setInseam(-1f);
-                    } else {
+                    if (editInseam.getText().toString().length() != 0) {
                         record.setInseam(round(Float.valueOf(editInseam.getText().toString())));
                     }
 
                     //now we should check if the comment is empty
-                    if (editComment.getText().toString().length() == 0) {
-                        //fill it to a special character so we dont display
-                    } else {
+                    if (editComment.getText().toString().length() != 0) {
                         record.setComment(editComment.getText().toString());
                     }
-
 
                     setResult(RESULT_OK);
                     recordsList.add(record);
                     adapter.notifyDataSetChanged();
+                    saveInFile();
 
 /*                    Log.d("Name: ", record.getName());
                     Log.d("Name: ", record.getDate().toString());
@@ -249,5 +247,25 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
         BigDecimal returnValue = new BigDecimal(floatValue);
         returnValue = returnValue.setScale(1, RoundingMode.HALF_UP);
         return returnValue.floatValue();
+    }
+
+    private void saveInFile() {
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME,
+                    Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(recordsList, out);
+            out.flush();
+
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO: Handle the exception properly later
+            throw new RuntimeException();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
     }
 }

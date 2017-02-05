@@ -1,6 +1,9 @@
 package com.example.hnkhan.hnkhan_sizebook;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by hnkhan on 1/26/17.
@@ -32,11 +35,17 @@ public class Records
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) {
+        //http://stackoverflow.com/questions/8573250/android-how-can-i-convert-string-to-date
+        SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.date = _simpleDateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public Float getNeck() {
