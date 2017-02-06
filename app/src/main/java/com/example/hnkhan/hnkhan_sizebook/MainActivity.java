@@ -78,12 +78,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         oldRecordsList.setAdapter(adapter);
     }
 
+    //update the count
     @Override
     public void onResume(){
         super.onResume();
         displayCount.setText(": " + recordsList.size());
     }
 
+    //on click for displaying the record
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    //long click for editing and deleting
     //http://stackoverflow.com/questions/17207366/creating-a-menu-after-a-long-click-event-on-a-list-view
     @Override
     public boolean onContextItemSelected(MenuItem item) {
