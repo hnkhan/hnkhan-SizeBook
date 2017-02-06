@@ -3,14 +3,13 @@ package com.example.hnkhan.hnkhan_sizebook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
-
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.recordsList;
+
+/*
+This class for displaying a record activity
+ */
 
 public class DisplayRecord extends AppCompatActivity {
 

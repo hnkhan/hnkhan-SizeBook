@@ -11,10 +11,20 @@
     android:orientation="vertical"
     tools:context="com.example.hnkhan.hnkhan_sizebook.MainActivity">
 
-    <TextView
-        android:layout_width="fill_parent"
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:text="@string/list_title" />
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/list_title" />
+
+        <TextView
+            android:id="@+id/records_count"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/records_list"

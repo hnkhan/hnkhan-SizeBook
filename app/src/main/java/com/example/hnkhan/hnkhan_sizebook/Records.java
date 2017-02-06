@@ -3,10 +3,10 @@ package com.example.hnkhan.hnkhan_sizebook;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-/**
- * Created by hnkhan on 1/26/17.
+/*
+This is our Records class where we store all the information
+about our records
  */
 
 public class Records

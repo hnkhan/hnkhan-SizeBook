@@ -2,57 +2,38 @@ package com.example.hnkhan.hnkhan_sizebook;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
+import static com.example.hnkhan.hnkhan_sizebook.MainActivity.FILENAME;
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.adapter;
 import static com.example.hnkhan.hnkhan_sizebook.MainActivity.recordsList;
 
-// TODO -handle empty dates
+/*
+This class is for adding a new record activity
+ */
 
 public class InputRecordActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
 
     EditText editName, editDate, editNeck, editBust, editChest, editWaist, editHip, editInseam, editComment;
-    private Integer recordCount = 0;
-
-    private static final String FILENAME = "file.sav";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_record);
-
-        //Intent intent = getIntent();
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_main);
         editName = (EditText) findViewById(R.id.edit_name);
@@ -147,17 +128,16 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                 //if all the information is valid
                 if (nameValid && neckValid && bustValid && chestValid &&
                     waistValid && hipValid && inseamValid) {
+
                     //now we can create an instance of the records class and start
                     //setting the data because we know its all valid
-                    recordCount++;
-                    Records record = new Records(editName.getText().toString());
-                    //record.setName(editComment.getText().toString());
 
+                    Records record = new Records(editName.getText().toString());
+
+                    //if its not null, we will store the information in our record object
                     if (editDate.getText() != null) {
                         record.setDate(editDate.getText().toString());
                     }
-                    //if they put nothing in the measurements, we will assign it a negative number
-                    //so later we don't have to display the fields that have a negative value
 
                     //neck
                     if (editNeck.getText().toString().length() != 0) {
@@ -199,21 +179,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
                     adapter.notifyDataSetChanged();
                     saveInFile();
 
-/*                    Log.d("Name: ", record.getName());
-                    Log.d("Name: ", record.getDate().toString());
-                    Log.d("Name: ", record.getNeck().toString());
-                    Log.d("Name: ", record.getBust().toString());
-                    Log.d("Name: ", record.getChest().toString());
-                    Log.d("Name: ", record.getWaist().toString());
-                    Log.d("Name: ", record.getHip().toString());
-                    Log.d("Name: ", record.getInseam().toString());
-                    Log.d("Name: ", record.getInseam().toString());
-                    Log.d("Name: ", record.getComment());*/
-
                     finish();
-
-                    //Intent intent = new Intent(InputRecordActivity.this, MainActivity.class);
-                    //startActivity(intent);
                 }
             }
         });
@@ -249,6 +215,7 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
         return returnValue.floatValue();
     }
 
+    //taken from lonelyTwitter
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,
@@ -261,10 +228,8 @@ public class InputRecordActivity extends AppCompatActivity  implements DatePicke
 
             fos.close();
         } catch (FileNotFoundException e) {
-            // TODO: Handle the exception properly later
             throw new RuntimeException();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             throw new RuntimeException();
         }
     }

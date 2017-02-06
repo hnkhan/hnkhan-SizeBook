@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,10 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -29,25 +26,38 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/*
+This is the main activity where the list view appears
+ */
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
 {
-    private ListView oldRecordsList;
+    ListView oldRecordsList;
+    TextView displayCount;
+
     public static ArrayList<Records> recordsList;
     public static ArrayAdapter<Records> adapter;
+
     public static final String FILENAME = "file.sav";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         recordsList = new ArrayList<Records>();
         loadFromFile();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         oldRecordsList = (ListView) findViewById(R.id.records_list);
         oldRecordsList.setOnItemClickListener(this);
         registerForContextMenu(oldRecordsList);
+
         Button addRecord = (Button) findViewById(R.id.add_record_button);
+        displayCount= (TextView) findViewById(R.id.records_count);
+
+        displayCount.setText(": " + recordsList.size());
 
         addRecord.setOnClickListener( new View.OnClickListener()
         {
@@ -64,10 +74,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-
         adapter = new ArrayAdapter<Records>(this, R.layout.record_item, recordsList);
-
         oldRecordsList.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        displayCount.setText(": " + recordsList.size());
     }
 
     @Override
@@ -77,9 +91,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(MainActivity.this, DisplayRecord.class);
         intent.putExtra("position_id", position);
         startActivity(intent);
-
-
     }
+
     //http://stackoverflow.com/questions/17207366/creating-a-menu-after-a-long-click-event-on-a-list-view
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -91,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    //http://stackoverflow.com/questions/17207366/creating-a-menu-after-a-long-click-event-on-a-list-view
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -104,12 +118,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setResult(RESULT_OK);
                 recordsList.remove(info.position);
                 adapter.notifyDataSetChanged();
+                saveInFile();
+                displayCount.setText(": " + recordsList.size());
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
+    //taken from lonelyTwitter
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -123,10 +140,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             recordsList = gson.fromJson(in, listType);
 
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             recordsList = new ArrayList<Records>();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            throw new RuntimeException();
+        }
+    }
+    //taken from lonelyTwitter
+    private void saveInFile() {
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME,
+                    Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(recordsList, out);
+            out.flush();
+
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException();
+        } catch (IOException e) {
             throw new RuntimeException();
         }
     }
